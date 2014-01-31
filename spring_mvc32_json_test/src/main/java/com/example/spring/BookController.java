@@ -3,13 +3,23 @@ package com.example.spring;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 @Controller
 public class BookController {
@@ -37,9 +47,26 @@ public class BookController {
 	@RequestMapping(value = "/books", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
 			+ ";charset=utf-8")
 	@ResponseBody
-	public Book insert(@RequestBody Book book) {
+	public Book insert(@RequestBody @Valid Book book, Errors errors) {
+		for (ObjectError oe : errors.getAllErrors()) {
+			System.out.println(oe.getDefaultMessage());
+		}
+
 		bookList.add(book);
 		return book;
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ModelAndView handleException(HttpMessageNotReadableException ex,
+			WebRequest request) {
+		Throwable t = ex.getCause();
+		if (t != null && t instanceof InvalidFormatException) {
+			InvalidFormatException ife = (InvalidFormatException) t;
+			System.out.println("value=" + ife.getValue());
+		}
+		ModelAndView mav = new ModelAndView("/error/error");
+		mav.addObject("message", "IOException が発生しました。");
+		return mav;
 	}
 
 	@RequestMapping(value = "/books/{bookId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
@@ -74,4 +101,5 @@ public class BookController {
 
 		return new Book();
 	}
+
 }

@@ -20,7 +20,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
  <mvc:annotation-driven validator="validator" />
 
  <!-- Spring MVCアノテーション利用設定 -->
- <context:component-scan base-package="com.example.spring.mvcjson" />
+ <context:component-scan base-package="com.example.spring" />
  <!-- Static Resourceの設定 -->
  <mvc:resources mapping="/image/**" location="/WEB-INF/resources/image/" />
  <mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />

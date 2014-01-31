@@ -18,8 +18,8 @@
    <tbody>
    </tbody>
   </table>
-  <script src="js/lib/jquery-2.0.3.min.js"></script>
-  <script src="js/lib/underscore-1.5.1.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
   <script src="js/book.js"></script>
  </body>
 </html>
