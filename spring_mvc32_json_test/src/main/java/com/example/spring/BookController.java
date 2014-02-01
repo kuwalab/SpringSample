@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 @Controller
@@ -57,16 +57,23 @@ public class BookController {
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ModelAndView handleException(HttpMessageNotReadableException ex,
+	@ResponseBody
+	public Book handleException(HttpMessageNotReadableException ex,
 			WebRequest request) {
 		Throwable t = ex.getCause();
 		if (t != null && t instanceof InvalidFormatException) {
 			InvalidFormatException ife = (InvalidFormatException) t;
+			// エラーのフィールド。
+			for (Reference r : ife.getPath()) {
+				System.out.println(r.getFieldName());
+			}
+			// エラーになったフィールドの型
+			System.out.println("type= " + ife.getTargetType().getName());
+			// エラーになったフィールドの値
 			System.out.println("value=" + ife.getValue());
 		}
-		ModelAndView mav = new ModelAndView("/error/error");
-		mav.addObject("message", "IOException が発生しました。");
-		return mav;
+
+		return new Book();
 	}
 
 	@RequestMapping(value = "/books/{bookId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
