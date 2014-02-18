@@ -1,10 +1,10 @@
 package com.example.spring;
 
 import jp.sf.amateras.mirage.SqlManager;
-import jp.sf.amateras.mirage.integration.guice.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class TransactionSpringService {
@@ -12,7 +12,9 @@ public class TransactionSpringService {
 	private SqlManager sqlManager;
 
 	@Transactional
-	public int insert(Emp emp) {
-		return sqlManager.insertEntity(emp);
+	public void insert(Emp emp) {
+		// キーの重複をわざと起こす
+		sqlManager.insertEntity(emp);
+		sqlManager.insertEntity(emp);
 	}
 }

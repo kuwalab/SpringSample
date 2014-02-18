@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+ <context:annotation-config />
+ <context:component-scan base-package="*" />
+
+ <bean id="transactionManager"
+  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  <property name="dataSource" ref="dataSource" />
+ </bean>
+
+ <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+  <tx:attributes>
+   <tx:method name="select*" read-only="true" />
+   <tx:method name="*" propagation="REQUIRED" isolation="READ_COMMITTED"
+    timeout="10" read-only="false" />
+  </tx:attributes>
+ </tx:advice>
+ <aop:config>
+  <aop:advisor advice-ref="transactionAdvice"
+   pointcut="execution(* com.example.spring.*Service.*(..))" />
+ </aop:config>
+ <bean id="dataSource"
+  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  <property name="driverClassName" value="org.postgresql.Driver" />
+  <property name="url" value="jdbc:postgresql://127.0.0.1:5432/miragedb" />
+  <property name="username" value="mirage" />
+  <property name="password" value="mirage" />
+ </bean>
+
+ <bean id="connectionProvider"
+  class="jp.sf.amateras.mirage.integration.spring.SpringConnectionProvider">
+  <property name="transactionManager" ref="transactionManager" />
+ </bean>
+
+ <bean id="dialect" class="jp.sf.amateras.mirage.dialect.HyperSQLDialect" />
+
+ <bean id="sqlManager" class="jp.sf.amateras.mirage.SqlManagerImpl">
+  <property name="connectionProvider" ref="connectionProvider" />
+  <property name="dialect" ref="dialect" />
+ </bean>
+ 
+ <bean
+  class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
+  <constructor-arg ref="dataSource" />
+ </bean>
+ <bean class="com.example.spring.MiragePersistenceExceptionTranslator" />
+ <bean
+  class="org.springframework.dao.support.ChainedPersistenceExceptionTranslator" />
+ <!-- @Repositoryがついているクラスでおきた例外を変換するBeanのpost-processor -->
+ <bean
+  class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+
+ 
+</beans>
