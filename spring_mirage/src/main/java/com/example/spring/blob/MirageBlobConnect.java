@@ -7,8 +7,6 @@ import jp.sf.amateras.mirage.StringSqlResource;
 import jp.sf.amateras.mirage.session.Session;
 import jp.sf.amateras.mirage.session.SessionFactory;
 
-import com.example.spring.Emp;
-
 public class MirageBlobConnect {
 	public static void main(String[] args) {
 		Session session = SessionFactory.getSession();
@@ -16,12 +14,23 @@ public class MirageBlobConnect {
 		session.begin();
 
 		try {
-			List<Emp> result = sqlManager
-					.getResultList(Emp.class, new StringSqlResource(
+			List<EmpPic> empPicList = sqlManager
+					.getResultList(EmpPic.class, new StringSqlResource(
 							"SELECT emp_no,emp_pic FROM emp_pic"));
+			for (EmpPic empPic : empPicList) {
+				System.out.println("### " + empPic.getEmpNo() + ":"
+						+ empPic.getEmpPic().length);
+				// for (int i = 0; i < empPic.getEmpPic().length; i++) {
+				// if ((i + 1) % 8192 == 0) {
+				// System.out.println();
+				// }
+				// System.out.format("%02x", empPic.getEmpPic()[i]);
+				// }
+			}
 
 			session.commit();
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			session.rollback();
 		} finally {
 			session.release();
