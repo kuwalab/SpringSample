@@ -1,4 +1,4 @@
-package com.example.spring.blob;
+package com.example.blob;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

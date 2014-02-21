@@ -1,4 +1,4 @@
-package com.example.spring.blob;
+package com.example.blob;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -21,11 +21,8 @@ public class OidRead {
 
 	public static void read(int key) {
 		try {
-			/* ユーザ名 */
 			String user = "mirage";
-			/* パスワード */
 			String pass = "mirage";
-			/* サーバ名 */
 			String url = "jdbc:postgresql://127.0.0.1:5432/miragedb";
 
 			Connection conn = null;
@@ -33,20 +30,14 @@ public class OidRead {
 			ResultSet rs = null;
 
 			try {
-				/* ドライバクラスのロード */
 				// Class.forName("org.postgresql.Driver");
-
-				/* Connectionの作成 */
 				conn = DriverManager.getConnection(url, user, pass);
 				conn.setAutoCommit(false);
-
-				/* Statementの作成 */
 				stmt = conn
 						.prepareStatement("select emp_pic from emp_oid where emp_no=?");
 				stmt.setInt(1, key);
 
 				rs = stmt.executeQuery();
-
 				rs.next();
 				Blob content = rs.getBlob(1);
 				try (BufferedInputStream bis = new BufferedInputStream(
@@ -54,9 +45,9 @@ public class OidRead {
 						BufferedOutputStream bos = new BufferedOutputStream(
 								new FileOutputStream("file/output/" + key
 										+ ".dat"))) {
-					rs.close();
-					stmt.close();
-					byte[] block = new byte[8192];
+					// rs.close();
+					// stmt.close();
+					byte[] block = new byte[1024 * 8];
 					int len;
 					while ((len = bis.read(block)) != -1) {
 						bos.write(block, 0, len);
@@ -64,12 +55,12 @@ public class OidRead {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				rs.close();
+				stmt.clearBatch();
 				conn.close();
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				/* クローズ処理 */
 				if (conn != null) {
 					conn.close();
 					conn = null;
@@ -86,6 +77,5 @@ public class OidRead {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 }

@@ -1,4 +1,4 @@
-package com.example.spring.blob;
+package com.example.blob;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,25 +22,18 @@ public class OidWrite {
 
 	public static void write(int key) {
 		try {
-			/* ユーザ名 */
 			String user = "mirage";
-			/* パスワード */
 			String pass = "mirage";
-			/* サーバ名 */
 			String url = "jdbc:postgresql://127.0.0.1:5432/miragedb";
 
 			Connection conn = null;
 			PreparedStatement stmt = null;
 
 			try {
-				/* ドライバクラスのロード */
 				// Class.forName("org.postgresql.Driver");
-
-				/* Connectionの作成 */
 				conn = DriverManager.getConnection(url, user, pass);
 				conn.setAutoCommit(false);
 
-				/* Statementの作成 */
 				stmt = conn
 						.prepareStatement("insert into emp_oid values(?,lo_create(0))");
 				stmt.setInt(1, key);
@@ -56,7 +49,7 @@ public class OidWrite {
 					File file = new File("file/input/100M.file");
 					try (FileInputStream fis = new FileInputStream(file);
 							OutputStream out = content.setBinaryStream(1)) {
-						byte[] buffer = new byte[8192];
+						byte[] buffer = new byte[1024 * 8];
 						int len;
 						while ((len = fis.read(buffer)) != -1) {
 							out.write(buffer, 0, len);
