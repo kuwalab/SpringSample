@@ -48,18 +48,12 @@ http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
   <property name="connectionProvider" ref="connectionProvider" />
   <property name="dialect" ref="dialect" />
  </bean>
- 
  <bean
   class="org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator">
   <constructor-arg ref="dataSource" />
  </bean>
  <bean class="com.example.spring.MiragePersistenceExceptionTranslator" />
- <bean
-  class="org.springframework.dao.support.ChainedPersistenceExceptionTranslator" />
  <!-- @Repositoryがついているクラスでおきた例外を変換するBeanのpost-processor -->
  <bean
   class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-
- 
 </beans>

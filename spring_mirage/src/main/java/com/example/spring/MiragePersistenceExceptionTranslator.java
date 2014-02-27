@@ -20,7 +20,7 @@ public class MiragePersistenceExceptionTranslator implements
 			Throwable t;
 			while ((t = ex.getCause()) != null) {
 				if (t instanceof SQLException) {
-					throw translator.translate("", "", (SQLException) t);
+					return translator.translate("", "", (SQLException) t);
 				}
 			}
 		}

@@ -47,11 +47,7 @@ public class OidRead {
 										+ ".dat"))) {
 					// rs.close();
 					// stmt.close();
-					byte[] block = new byte[1024 * 8];
-					int len;
-					while ((len = bis.read(block)) != -1) {
-						bos.write(block, 0, len);
-					}
+					IOUtil.binaryCopy(bis, bos);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
