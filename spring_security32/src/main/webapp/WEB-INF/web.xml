@@ -18,7 +18,7 @@
  </context-param>
  <context-param>
   <param-name>contextConfigLocation</param-name>
-  <param-value>/WEB-INF/spring/security.xml</param-value>
+  <param-value>/WEB-INF/spring/beans-webmvc.xml, /WEB-INF/spring/security.xml</param-value>
  </context-param>
  <filter>
   <filter-name>CharacterEncodingFilter</filter-name>
@@ -52,7 +52,7 @@
   </servlet-class>
   <init-param>
    <param-name>contextConfigLocation</param-name>
-   <param-value>/WEB-INF/spring/beans-webmvc.xml</param-value>
+   <param-value></param-value>
   </init-param>
  </servlet>
  <servlet-mapping>
