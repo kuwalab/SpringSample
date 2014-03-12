@@ -9,4 +9,9 @@ public class LoginController {
 	public String index() {
 		return "login/index";
 	}
+
+	@RequestMapping("/login/error")
+	public String error() {
+		return "login/error";
+	}
 }
