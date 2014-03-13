@@ -9,8 +9,8 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
   <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
   <intercept-url pattern="/login/error*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
   <intercept-url pattern="/**" access="ROLE_USER" />
-  <form-login login-page="/login" always-use-default-target="true"
-   default-target-url="/test/" authentication-failure-url="/login/error" />
+  <form-login login-page="/login" authentication-failure-url="/login/error"
+   authentication-success-handler-ref="testAuthenticationSuccessHandler" />
   <logout logout-url="/restart" />
  </http>
  <authentication-manager alias="authenticationManager">
@@ -31,6 +31,11 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
    </password-encoder>
   </authentication-provider>
  </authentication-manager>
+ <beans:bean id="testAuthenticationSuccessHandler"
+  class="com.example.spring_security32.TestAuthenticationSuccessHandler">
+  <beans:property name="alwaysUseDefaultTargetUrl" value="true"></beans:property>
+  <beans:property name="defaultTargetUrl" value="/test/"></beans:property>
+ </beans:bean>
 
  <beans:bean id="shaPasswordEncoder"
   class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
