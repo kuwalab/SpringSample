@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/security"
- xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:beans="http://www.springframework.org/schema/beans" xmlns:util="http://www.springframework.org/schema/util"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security-3.2.xsd
 http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util-3.2.xsd">
  <http>
   <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
   <intercept-url pattern="/login/error*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -14,23 +17,18 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
   <logout logout-url="/restart" />
  </http>
  <authentication-manager alias="authenticationManager">
-  <authentication-provider>
-   <user-service>
-    <user name="user1"
-     password="ca027a2a4e2f589438fffbf177fda636c1078b1b84a1c7f851df34b7488b1169"
-     authorities="ROLE_USER" />
-    <user name="user2"
-     password="c421cda1933f73eb385460bfbb6a574c0de29a5fd82cee0e1d46445b863f9b63"
-     authorities="ROLE_USER" />
-    <user name="admin"
-     password="16cad0e61203815a06ffa22f2c536e9a9de15040e33e2afa381e494c310ee04e"
-     authorities="ROLE_USER,ROLE_ADMIN" />
-   </user-service>
+  <authentication-provider user-service-ref="inMemoryDaoImpl">
    <password-encoder ref="shaPasswordEncoder">
     <salt-source user-property="username" />
    </password-encoder>
   </authentication-provider>
  </authentication-manager>
+ <beans:bean id="inMemoryDaoImpl"
+  class="org.springframework.security.core.userdetails.memory.InMemoryDaoImpl">
+  <beans:property name="userProperties">
+   <util:properties location="classpath:userlist.properties" />
+  </beans:property>
+ </beans:bean>
  <beans:bean id="testAuthenticationSuccessHandler"
   class="com.example.spring_security32.TestAuthenticationSuccessHandler">
   <beans:property name="alwaysUseDefaultTargetUrl" value="true"></beans:property>
