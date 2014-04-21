@@ -16,9 +16,7 @@ import java.sql.ResultSet;
 public class BlobTool {
 
 	public static void main(String... args) {
-		for (int i = 1; i <= 10; i++) {
-			write(i);
-		}
+		write(100);
 	}
 
 	public static void read(int key) {
@@ -115,7 +113,7 @@ public class BlobTool {
 				/* Statementの作成 */
 				stmt = conn.prepareStatement("insert into emp_pic values(?,?)");
 				stmt.setInt(1, key);
-				File file = new File("file/input/100M.file");
+				File file = new File("file/input/299.jpg");
 
 				try (FileInputStream fis = new FileInputStream(file)) {
 					stmt.setBinaryStream(2, fis, (int) file.length());

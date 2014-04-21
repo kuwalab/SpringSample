@@ -15,9 +15,7 @@ import java.sql.ResultSet;
 public class OidWrite {
 
 	public static void main(String... args) {
-		for (int i = 1; i <= 10; i++) {
-			write(i);
-		}
+		write(100);
 	}
 
 	public static void write(int key) {
@@ -46,7 +44,7 @@ public class OidWrite {
 				ResultSet rs = stmt.executeQuery();
 				if (rs.next()) {
 					Blob content = rs.getBlob(1);
-					File file = new File("file/input/100M.file");
+					File file = new File("file/input/299.jpg");
 					try (FileInputStream fis = new FileInputStream(file);
 							OutputStream out = content.setBinaryStream(1)) {
 						byte[] buffer = new byte[1024 * 8];
