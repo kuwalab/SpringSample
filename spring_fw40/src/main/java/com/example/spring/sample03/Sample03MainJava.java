@@ -11,5 +11,8 @@ public class Sample03MainJava {
 		System.out.println(car1);
 		Car car2 = (Car) ctx.getBean("car2");
 		System.out.println(car2);
+		// singleton?
+		Car car2_2 = (Car) ctx.getBean("car2");
+		System.out.println(car2 == car2_2);
 	}
 }
