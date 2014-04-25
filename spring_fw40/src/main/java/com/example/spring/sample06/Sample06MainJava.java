@@ -13,5 +13,7 @@ public class Sample06MainJava {
 		System.out.println(car2);
 
 		System.out.println("car1=car2: " + (car1 == car2));
+
+		((AnnotationConfigApplicationContext) ctx).close();
 	}
 }

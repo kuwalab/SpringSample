@@ -14,5 +14,6 @@ public class Sample02Main {
 		BookService bookService = ctx.getBean(BookService.class);
 		Book book = bookService.search("");
 		System.out.println(book);
+		((ClassPathXmlApplicationContext) ctx).close();
 	}
 }

@@ -12,5 +12,6 @@ public class Sample04Main {
 		System.out.println(car1);
 		Car car2 = (Car) ctx.getBean("car2");
 		System.out.println(car2);
+		((ClassPathXmlApplicationContext) ctx).close();
 	}
 }

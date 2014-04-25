@@ -13,5 +13,6 @@ public class Sample02MainJava {
 		BookService bookService = ctx.getBean(BookService.class);
 		Book book = bookService.search("");
 		System.out.println(book);
+		((AnnotationConfigApplicationContext) ctx).close();
 	}
 }

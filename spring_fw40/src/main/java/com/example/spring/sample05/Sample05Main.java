@@ -15,5 +15,6 @@ public class Sample05Main {
 				"/sample05.xml");
 		SampleBean sampleBean = (SampleBean) ctx.getBean("sampleBean");
 		System.out.println(sampleBean);
+		((ClassPathXmlApplicationContext) ctx).close();
 	}
 }

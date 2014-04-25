@@ -14,5 +14,6 @@ public class Sample03MainJava {
 		// singleton?
 		Car car2_2 = (Car) ctx.getBean("car2");
 		System.out.println(car2 == car2_2);
+		((AnnotationConfigApplicationContext) ctx).close();
 	}
 }

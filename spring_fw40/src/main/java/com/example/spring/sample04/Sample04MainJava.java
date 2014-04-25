@@ -12,5 +12,6 @@ public class Sample04MainJava {
 		System.out.println(car1);
 		Car car2 = (Car) ctx.getBean("car2");
 		System.out.println(car2);
+		((AnnotationConfigApplicationContext) ctx).close();
 	}
 }

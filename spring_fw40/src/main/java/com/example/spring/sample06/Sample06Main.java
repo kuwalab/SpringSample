@@ -13,5 +13,6 @@ public class Sample06Main {
 		Car car2 = ctx.getBean(Car.class);
 		System.out.println(car2);
 		System.out.println("car1=car2: " + (car1 == car2));
+		((ClassPathXmlApplicationContext) ctx).close();
 	}
 }

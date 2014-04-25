@@ -10,5 +10,6 @@ public class Sample05MainJava {
 				Sample05Config.class);
 		SampleBean sampleBean = (SampleBean) ctx.getBean("sampleBean");
 		System.out.println(sampleBean);
+		((AnnotationConfigApplicationContext) ctx).close();
 	}
 }
