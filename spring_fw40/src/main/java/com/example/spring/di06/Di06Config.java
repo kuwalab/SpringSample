@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
-public class Sample06Config {
+public class Di06Config {
 	@Bean
 	@Scope("prototype")
 	public Car car() {

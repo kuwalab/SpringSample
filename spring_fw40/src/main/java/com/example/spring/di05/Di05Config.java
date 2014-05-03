@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class Sample05Config {
+public class Di05Config {
 	@Bean
 	public SampleBean sampleBean() {
 		SampleBean sampleBean = new SampleBean();

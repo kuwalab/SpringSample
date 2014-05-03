@@ -3,7 +3,7 @@ package com.example.spring.di05;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class Sample05Main {
+public class Di05Main {
 
 	/**
 	 * http://www.techscore.com/tech/Java/Others/Spring/3/
