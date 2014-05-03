@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+ <!-- @Autowiredや@Resourceを使用する場合の宣言。 mvc:annotaion-drivenが指定されている場合省略可能 -->
+ <context:annotation-config />
+ <bean id="sampleBean" class="com.example.spring.di05.SampleBean">
+  <property name="list">
+   <list>
+    <value>list 1</value>
+    <value>list 2</value>
+   </list>
+  </property>
+  <property name="map">
+   <map>
+    <entry key="mapKey1">
+     <value>map 1</value>
+    </entry>
+    <entry key="mapKey2">
+     <value>map 2</value>
+    </entry>
+   </map>
+  </property>
+  <property name="set">
+   <set>
+    <value>set 1</value>
+    <value>set 2</value>
+   </set>
+  </property>
+  <property name="properties">
+   <props>
+    <prop key="propKey1">prop 1</prop>
+    <prop key="propKey2">prop 2</prop>
+   </props>
+  </property>
+ </bean>
+</beans>
