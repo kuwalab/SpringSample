@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:aop="http://www.springframework.org/schema/aop"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+ <!-- @Autowiredや@Resourceを使用する場合の宣言。 mvc:annotaion-drivenが指定されている場合省略可能 -->
+ <context:annotation-config />
+ <!-- @componentを検索するパッケージ。サブパッケージも検索する -->
+ <context:component-scan base-package="com.example.spring.common" />
+ <bean id="sampleAspect" class="com.example.spring.aop01.SampleAspect" />
+ <aop:config>
+  <aop:aspect id="aspect" ref="sampleAspect">
+   <aop:pointcut id="pc" expression="execution(* search(String))" />
+   <aop:before pointcut-ref="pc" method="before" />
+   <aop:after pointcut-ref="pc" method="after" />
+   <aop:after-returning pointcut-ref="pc" method="afterReturning" returning="book" />
+   <aop:around pointcut-ref="pc" method="around" />
+   <aop:after-throwing pointcut-ref="pc" method="afterThrowing" throwing="t"/>
+  </aop:aspect>
+ </aop:config>
+</beans>
