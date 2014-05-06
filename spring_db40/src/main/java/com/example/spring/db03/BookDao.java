@@ -31,8 +31,8 @@ public class BookDao {
 	public List<Book> searchBookList2(String bookName) {
 		return npJdbcTemplate.query(
 				"SELECT * FROM book WHERE book_name LIKE :book_name",
-				new MapSqlParameterSource().addValue("book_name", bookName),
-				new BeanPropertyRowMapper<Book>(Book.class));
+				new MapSqlParameterSource().addValue("book_name", bookName
+						+ "%"), new BeanPropertyRowMapper<Book>(Book.class));
 	}
 
 	public List<Book> searchBookList3(Book book) {
